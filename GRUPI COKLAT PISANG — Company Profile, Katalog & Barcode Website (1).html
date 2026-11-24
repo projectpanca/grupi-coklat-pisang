@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRUPI COKLAT PISANG — Company Profile, Katalog, Video &amp; Barcode Website</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- QR Code Generator Library (qrcodejs) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        choco: {
+                            950: '#1A0D08',
+                            900: '#2A160E',
+                            800: '#3D2116',
+                            700: '#522E1F',
+                            600: '#6C3F2B',
+                        },
+                        gold: {
+                            300: '#F5DF92',
+                            400: '#E5C158',
+                            500: '#D4AF37',
+                            600: '#B08A1E',
+                        },
+                        cream: {
+                            50: '#FEFCFA',
+                            100: '#FAF5EE',
+                            200: '#F1E7DA',
+                            300: '#E2D2BE',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        sans: ['"Inter"', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'gold': '0 12px 28px -6px rgba(212, 175, 55, 0.32)',
+                        'card': '0 18px 38px -16px rgba(42, 22, 14, 0.22)',
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #2A160E;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 9999px;
+        }
+        .gold-text {
+            background: linear-gradient(135deg, #F5DF92 0%, #D4AF37 55%, #B08A1E 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-btn {
+            background: linear-gradient(135deg, #E8C55C 0%, #D4AF37 55%, #B68F20 100%);
+        }
+        .choco-grid-bg {
+            background-color: #2A160E;
+            background-image: radial-gradient(rgba(212, 175, 55, 0.1) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        #website-qr-canvas img,
+        #website-qr-canvas canvas {
+            margin: 0 auto;
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.75rem;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-qr-card,
+            #printable-qr-card * {
+                visibility: visible;
+            }
+            #printable-qr-card {
+                position: fixed;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
+                max-width: 420px;
+                box-shadow: none !important;
+                border: 2px solid #2A160E !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-cream-100 text-choco-900 font-sans antialiased selection:bg-gold-500 selection:text-choco-950 overflow-x-hidden">
+
+    <!-- Notifikasi Toast -->
+    <div id="toast-box" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-sm"></div>
+
+    <!-- Modal Pop-Up Scan Barcode WhatsApp -->
+    <div id="qr-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-choco-950/80 backdrop-blur-sm p-4">
+        <div class="bg-cream-50 border-2 border-gold-500 rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl relative text-center">
+            <button type="button" onclick="closeQrModal()" aria-label="Tutup jendela barcode" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-cream-200 hover:bg-choco-900 hover:text-gold-300 text-choco-900 flex items-center justify-center transition">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/15 text-choco-800 text-xs font-bold uppercase tracking-wider mb-2">
+                <i data-lucide="qr-code" class="w-3.5 h-3.5 text-gold-600"></i> Scan Pemesanan WhatsApp
+            </span>
+            <h3 class="font-serif text-2xl font-bold text-choco-900 mb-1">GRUPI COKLAT PISANG</h3>
+            <p class="text-xs sm:text-sm text-choco-700 mb-4">Arahkan kamera ponsel atau pemindai WhatsApp ke kode QR di bawah ini.</p>
+
+            <div class="bg-white p-3 rounded-2xl border border-cream-300 shadow-inner mx-auto max-w-[270px] mb-5">
+                <img
+                    src="https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/Scan%20Pemesanan.jpg"
+                    data-fallback="https://github.com/projectpanca/grupi-coklat-pisang/blob/ece2155fa8fec30a382882c5622afd2081d2b963/Scan%20Pemesanan.jpg?raw=true"
+                    data-placeholder="https://placehold.co/540x540/FAF5EE/2A160E?text=Scan+Pemesanan+GRUPI"
+                    onerror="handleImageError(this)"
+                    alt="Scan Untuk Pesan GRUPI Coklat Pisang"
+                    class="w-full h-auto rounded-xl object-contain mx-auto"
+                >
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-2.5">
+                <a href="https://wa.me/6289656660841?text=Halo%20GRUPI%20COKLAT%20PISANG,%20saya%20ingin%20memesan%20produk." target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl gold-btn text-choco-950 font-bold text-sm shadow-gold hover:brightness-105 transition">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    <span>Chat WhatsApp</span>
+                </a>
+                <button type="button" onclick="copyText('089656660841', 'Nomor kontak 089656660841 berhasil disalin!')" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-choco-900 hover:bg-choco-800 text-gold-300 font-semibold text-sm transition">
+                    <i data-lucide="copy" class="w-4 h-4"></i>
+                    <span>Salin Nomor</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. HEADER & NAVIGASI -->
+    <header id="profil" class="sticky top-0 z-40 bg-choco-900/95 backdrop-blur-md border-b border-gold-500/25 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo & Identitas Brand -->
+                <a href="#hero" class="flex items-center gap-3 group min-w-0">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-cream-50 p-1 border border-gold-400/70 shadow-md flex items-center justify-center overflow-hidden shrink-0 group-hover:scale-105 transition-transform">
+                        <img
+                            src="https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/LOGO.png"
+                            data-fallback="https://github.com/projectpanca/grupi-coklat-pisang/blob/ece2155fa8fec30a382882c5622afd2081d2b963/LOGO.png?raw=true"
+                            data-placeholder="https://placehold.co/120x120/2A160E/E5C158?text=GRUPI"
+                            onerror="handleImageError(this)"
+                            alt="Logo GRUPI COKLAT PISANG"
+                            class="w-full h-full object-contain"
+                        >
+                    </div>
+                    <div class="truncate">
+                        <span class="block font-serif font-extrabold text-base sm:text-xl tracking-wide gold-text truncate">GRUPI COKLAT PISANG</span>
+                        <span class="block text-[10px] sm:text-xs tracking-[0.18em] text-cream-200 uppercase font-medium">Banana Chocolate Cluster</span>
+                    </div>
+                </a>
+
+                <!-- Navigasi Desktop -->
+                <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-cream-100">
+                    <a href="#profil" class="hover:text-gold-400 transition-colors">Profil</a>
+                    <a href="#produk" class="hover:text-gold-400 transition-colors">Katalog &amp; Harga</a>
+                    <a href="#video-produk" class="hover:text-gold-400 transition-colors">Video Produk</a>
+                    <a href="#barcode-website" class="hover:text-gold-400 transition-colors">Barcode &amp; QR</a>
+                    <a href="#legalitas" class="hover:text-gold-400 transition-colors">Legalitas</a>
+                </nav>
+
+                <!-- Tombol Aksi Header -->
+                <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                    <a href="#barcode-website" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-gold-500/50 text-gold-300 hover:bg-gold-500/10 text-xs font-bold transition">
+                        <i data-lucide="qr-code" class="w-4 h-4"></i>
+                        <span>Barcode Web</span>
+                    </a>
+                    <a href="#produk" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl gold-btn text-choco-950 font-bold text-xs sm:text-sm shadow-gold hover:brightness-105 transition">
+                        <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                        <span>Pesan</span>
+                    </a>
+                    <button type="button" id="mobile-menu-toggle" aria-label="Buka menu navigasi" class="md:hidden p-2.5 rounded-xl text-cream-100 hover:bg-choco-800 transition">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Mobile -->
+        <div id="mobile-menu" class="hidden md:hidden bg-choco-950 border-t border-gold-500/20 px-4 pt-3 pb-5 space-y-1.5">
+            <a href="#profil" onclick="closeMobileMenu()" class="block px-4 py-2.5 rounded-xl text-cream-100 hover:bg-choco-800 hover:text-gold-400 text-sm font-semibold">Profil</a>
+            <a href="#produk" onclick="closeMobileMenu()" class="block px-4 py-2.5 rounded-xl text-cream-100 hover:bg-choco-800 hover:text-gold-400 text-sm font-semibold">Katalog &amp; Harga</a>
+            <a href="#video-produk" onclick="closeMobileMenu()" class="block px-4 py-2.5 rounded-xl text-cream-100 hover:bg-choco-800 hover:text-gold-400 text-sm font-semibold">Video Produk</a>
+            <a href="#barcode-website" onclick="closeMobileMenu()" class="block px-4 py-2.5 rounded-xl text-cream-100 hover:bg-choco-800 hover:text-gold-400 text-sm font-semibold">Barcode &amp; QR</a>
+            <a href="#legalitas" onclick="closeMobileMenu()" class="block px-4 py-2.5 rounded-xl text-cream-100 hover:bg-choco-800 hover:text-gold-400 text-sm font-semibold">Legalitas</a>
+        </div>
+    </header>
+
+    <!-- 2. HERO SECTION & PROFIL SINGKAT -->
+    <section id="hero" class="choco-grid-bg text-cream-100 py-12 sm:py-16 lg:py-20 border-b border-gold-500/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+
+                <!-- Kisah Brand & Tombol CTA -->
+                <div class="lg:col-span-6 space-y-5 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold-500/15 border border-gold-500/40 text-gold-300 text-xs font-bold tracking-wider uppercase">
+                        <i data-lucide="award" class="w-4 h-4 text-gold-400"></i>
+                        <span>Camilan Khas Bandung • Alami • Renyah • Gurih</span>
+                    </div>
+
+                    <h1 class="font-serif text-3xl sm:text-5xl font-extrabold text-white leading-tight">
+                        GRUPI <span class="gold-text">COKLAT PISANG</span>
+                    </h1>
+
+                    <p class="text-cream-100/95 text-base sm:text-lg leading-relaxed">
+                        <strong>Dry crispy banana chocolate cluster</strong> yang diracik dari <strong>pisang tanduk</strong> pilihan berpadu dengan <strong>coklat compound</strong> dan <strong>coklat bubuk</strong> yang merata. Teksturnya kering renyah di setiap gigitan, tidak mudah lumer, dan tetap nyaman disantap kapan saja.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-left">
+                        <div class="p-3.5 rounded-2xl bg-choco-900/90 border border-gold-500/25">
+                            <p class="text-xs font-bold text-gold-400">Pisang Tanduk Pilihan</p>
+                            <p class="text-xs text-cream-200/85 mt-0.5">Diproses kering renyah &amp; gurih alami.</p>
+                        </div>
+                        <div class="p-3.5 rounded-2xl bg-choco-900/90 border border-gold-500/25">
+                            <p class="text-xs font-bold text-gold-400">Coklat Compound &amp; Bubuk</p>
+                            <p class="text-xs text-cream-200/85 mt-0.5">Balutan cokelat merata &amp; tidak lengket.</p>
+                        </div>
+                        <div class="p-3.5 rounded-2xl bg-choco-900/90 border border-gold-500/25">
+                            <p class="text-xs font-bold text-gold-400">SPP-IRT &amp; NIB Resmi</p>
+                            <p class="text-xs text-cream-200/85 mt-0.5">P-IRT 2043273014711-31 • Cikutra, Bandung.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
+                        <a href="#produk" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl gold-btn text-choco-950 font-extrabold text-sm sm:text-base shadow-gold hover:brightness-105 transition">
+                            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                            <span>Lihat Harga &amp; Pesan</span>
+                        </a>
+                        <a href="#barcode-website" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-choco-800 hover:bg-choco-700 border border-gold-500/45 text-gold-300 font-bold text-sm sm:text-base transition">
+                            <i data-lucide="qr-code" class="w-5 h-5"></i>
+                            <span>Barcode Akses Website</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Visual Banner Utama -->
+                <div class="lg:col-span-6">
+                    <div class="rounded-3xl overflow-hidden border-2 border-gold-500/45 bg-choco-950 shadow-2xl">
+                        <img
+                            src="https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/Banner.jpg"
+                            data-fallback="https://github.com/projectpanca/grupi-coklat-pisang/blob/ece2155fa8fec30a382882c5622afd2081d2b963/Banner.jpg?raw=true"
+                            data-placeholder="https://placehold.co/960x540/2A160E/E5C158?text=GRUPI+COKLAT+PISANG+Banner"
+                            onerror="handleImageError(this)"
+                            alt="Banner GRUPI COKLAT PISANG Premium Banana Chocolate Cluster"
+                            class="w-full h-auto max-h-[460px] object-cover object-center mx-auto"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. KATALOG PRODUK, MODE HARGA (UMUM / RESELLER) & KALKULATOR WHATSAPP -->
+    <section id="produk" class="py-16 sm:py-24 bg-cream-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="text-gold-600 font-bold tracking-[0.2em] text-xs uppercase block mb-2">Katalog Resmi &amp; Kalkulator Pesanan</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-choco-900 mb-3">Pilihan Kemasan GRUPI</h2>
+                <p class="text-choco-700 text-sm sm:text-base">
+                    Pilih mode <strong>Pembeli Umum</strong> atau <strong>Reseller</strong>, atur jumlah pouch per paket, lalu kirimkan pesanan langsung ke WhatsApp resmi.
+                </p>
+            </div>
+
+            <!-- Switcher Mode Harga Umum / Harga Reseller -->
+            <div class="flex flex-col items-center justify-center gap-3 mb-10">
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-choco-800">Mode Harga Pembeli:</span>
+                    <div class="inline-flex p-1.5 rounded-2xl bg-cream-200 border border-cream-300 shadow-sm" role="group" aria-label="Pilih mode harga">
+                        <button type="button" id="btn-mode-umum" onclick="setPriceMode('umum')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition gold-btn text-choco-950 shadow">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                            <span>Pembeli Umum</span>
+                        </button>
+                        <button type="button" id="btn-mode-reseller" onclick="setPriceMode('reseller')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition text-choco-800 hover:text-choco-950">
+                            <i data-lucide="store" class="w-4 h-4"></i>
+                            <span>Reseller</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ringkasan Syarat Minimum Order Reseller -->
+                <div id="reseller-syarat-banner" class="w-full max-w-3xl bg-white/90 border border-gold-500/40 rounded-2xl px-4 py-3 text-xs text-choco-800 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 shadow-sm">
+                    <span class="font-bold text-choco-900 inline-flex items-center gap-1.5">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-gold-600"></i>
+                        Syarat Min. Order Reseller:
+                    </span>
+                    <span><strong>Isi 6 pcs</strong> = min. <strong>20 pouch</strong> (Rp 14.000)</span>
+                    <span>&bull;</span>
+                    <span><strong>Isi 12 pcs</strong> = min. <strong>13 pouch</strong> (Rp 22.000)</span>
+                    <span>&bull;</span>
+                    <span><strong>Isi 16 pcs</strong> = min. <strong>10 pouch</strong> (Rp 28.500)</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+                <!-- Kolom Kiri: Foto Produk Asli & Galeri Kemasan -->
+                <div class="lg:col-span-5 bg-white rounded-3xl p-5 sm:p-7 border border-cream-300 shadow-card space-y-5">
+                    <div class="rounded-2xl overflow-hidden bg-cream-100 border border-cream-200">
+                        <img
+                            id="main-product-gallery-img"
+                            src="https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/Foto%20produk%20asli.jpg"
+                            data-fallback="https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/Foto%20Produk.jpg"
+                            data-placeholder="https://placehold.co/600x750/FAF5EE/2A160E?text=Foto+Produk+GRUPI"
+                            onerror="handleImageError(this)"
+                            alt="Kemasan Standing Pouch Panda GRUPI COKLAT PISANG"
+                            class="w-full h-auto max-h-[500px] object-contain mx-auto transition-all duration-300"
+                        >
+                    </div>
+
+                    <!-- Pemilih Cepat Galeri Foto Produk / Kemasan -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" onclick="selectGalleryImage('https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/Foto%20produk%20asli.jpg', 'https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/Foto%20Produk.jpg', 'Kemasan Standing Pouch Panda GRUPI COKLAT PISANG')" class="p-2.5 rounded-2xl bg-cream-100 hover:bg-cream-200 border border-cream-300 text-left flex items-center gap-2.5 transition">
+                            <img
+                                src="https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/Foto%20produk%20asli.jpg"
+                                data-fallback="https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/Foto%20Produk.jpg"
+                                data-placeholder="https://placehold.co/80x80/FAF5EE/2A160E?text=Produk"
+                                onerror="handleImageError(this)"
+                                alt="Thumbnail Foto Produk Asli"
+                                class="w-11 h-11 rounded-xl object-cover shrink-0 border border-cream-300"
+                            >
+                            <div class="min-w-0">
+                                <p class="text-xs font-bold text-choco-900 truncate">Foto Produk Asli</p>
+                                <p class="text-[11px] text-choco-700 truncate">Pouch panda &amp; isi</p>
+                            </div>
+                        </button>
+
+                        <button type="button" onclick="selectGalleryImage('https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/Banner.jpg', 'https://github.com/projectpanca/grupi-coklat-pisang/blob/ece2155fa8fec30a382882c5622afd2081d2b963/Banner.jpg?raw=true', 'Banner GRUPI COKLAT PISANG Pisang Tanduk &amp; Coklat')" class="p-2.5 rounded-2xl bg-cream-100 hover:bg-cream-200 border border-cream-300 text-left flex items-center gap-2.5 transition">
+                            <img
+                                src="https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/Banner.jpg"
+                                data-fallback="https://github.com/projectpanca/grupi-coklat-pisang/blob/ece2155fa8fec30a382882c5622afd2081d2b963/Banner.jpg?raw=true"
+                                data-placeholder="https://placehold.co/80x80/2A160E/E5C158?text=Banner"
+                                onerror="handleImageError(this)"
+                                alt="Thumbnail Banner Produk"
+                                class="w-11 h-11 rounded-xl object-cover shrink-0 border border-cream-300"
+                            >
+                            <div class="min-w-0">
+                                <p class="text-xs font-bold text-choco-900 truncate">Banner &amp; Bahan</p>
+                                <p class="text-[11px] text-choco-700 truncate">Pisang tanduk &amp; coklat</p>
+                            </div>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-3.5 p-4 rounded-2xl bg-cream-100 border border-cream-300">
+                        <img
+                            src="https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/LOGO.png"
+                            data-fallback="https://github.com/projectpanca/grupi-coklat-pisang/blob/ece2155fa8fec30a382882c5622afd2081d2b963/LOGO.png?raw=true"
+                            data-placeholder="https://placehold.co/80x80/2A160E/E5C158?text=LOGO"
+                            onerror="handleImageError(this)"
+                            alt="Emblem GRUPI COKLAT PISANG"
+                            class="w-12 h-12 rounded-full object-contain bg-white p-1 border border-cream-300 shrink-0"
+                        >
+                        <div>
+                            <h3 class="font-serif font-bold text-choco-900 text-sm sm:text-base">Kemasan Primer Plastik (Standing Pouch)</h3>
+                            <p class="text-xs text-choco-700 mt-0.5">Komposisi: pisang tanduk, coklat compound, coklat bubuk, minyak goreng, garam.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: 3 Paket Harga & Form Kalkulator WhatsApp -->
+                <div class="lg:col-span-7 space-y-6">
+                    <!-- 3 Paket Kemasan -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <!-- Paket Isi 6 pcs -->
+                        <div id="card-pkg-mini" class="bg-white rounded-3xl p-5 border border-cream-300 hover:border-gold-500 transition shadow-sm flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between gap-1 mb-2">
+                                    <span class="inline-block px-2.5 py-0.5 rounded-full bg-cream-200 text-choco-800 text-[11px] font-bold">Isi 6 pcs</span>
+                                    <span id="status-badge-mini" class="hidden px-2 py-0.5 rounded-full text-[10px] font-bold"></span>
+                                </div>
+                                <h3 class="font-serif text-lg font-bold text-choco-900">Paket Isi 6 pcs</h3>
+                                <p class="text-xs text-choco-700 mt-1 mb-2">Praktis untuk camilan harian atau paket coba rasa.</p>
+                                <p id="min-hint-mini" class="text-[11px] text-choco-600 font-medium mb-3">Min. Reseller: 20 pouch</p>
+                            </div>
+                            <div>
+                                <div class="mb-3">
+                                    <p id="price-display-mini" class="text-xl font-extrabold text-choco-900">Rp 17.000</p>
+                                    <p id="subprice-display-mini" class="text-[11px] font-semibold text-gold-600">Reseller: Rp 14.000 (min. 20)</p>
+                                </div>
+                                <div class="flex items-center justify-between bg-cream-100 rounded-xl p-1 border border-cream-300">
+                                    <button type="button" onclick="changeQty('mini', -1)" aria-label="Kurangi Paket Isi 6 pcs" class="w-9 h-9 rounded-lg bg-white hover:bg-choco-900 hover:text-white text-choco-900 flex items-center justify-center shadow-sm transition">
+                                        <i data-lucide="minus" class="w-4 h-4"></i>
+                                    </button>
+                                    <input type="number" id="qty-mini" min="0" value="0" onchange="handleQtyInput('mini', this.value)" aria-label="Jumlah pouch Paket Isi 6 pcs" class="w-12 text-center bg-transparent font-bold text-base text-choco-900 outline-none">
+                                    <button type="button" onclick="changeQty('mini', 1)" aria-label="Tambah Paket Isi 6 pcs" class="w-9 h-9 rounded-lg bg-choco-900 hover:bg-choco-700 text-gold-400 flex items-center justify-center shadow-sm transition">
+                                        <i data-lucide="plus" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                                <button type="button" id="set-min-btn-mini" onclick="setMinReseller('mini')" class="hidden mt-2 w-full py-1.5 px-2.5 rounded-lg bg-amber-100 hover:bg-amber-200 border border-amber-400 text-amber-950 text-[11px] font-bold transition">
+                                    Set ke Min. Reseller (20)
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Paket Isi 12 pcs -->
+                        <div id="card-pkg-reguler" class="bg-white rounded-3xl p-5 border-2 border-gold-500 relative shadow-card flex flex-col justify-between">
+                            <span class="absolute -top-3 right-4 px-3 py-0.5 rounded-full gold-btn text-choco-950 text-[10px] font-extrabold uppercase tracking-wider shadow">Favorit</span>
+                            <div>
+                                <div class="flex items-center justify-between gap-1 mb-2">
+                                    <span class="inline-block px-2.5 py-0.5 rounded-full bg-gold-500/15 text-choco-900 text-[11px] font-bold">Isi 12 pcs</span>
+                                    <span id="status-badge-reguler" class="hidden px-2 py-0.5 rounded-full text-[10px] font-bold"></span>
+                                </div>
+                                <h3 class="font-serif text-lg font-bold text-choco-900">Paket Isi 12 pcs</h3>
+                                <p class="text-xs text-choco-700 mt-1 mb-2">Ukuran terpopuler untuk keluarga dan buah tangan.</p>
+                                <p id="min-hint-reguler" class="text-[11px] text-choco-600 font-medium mb-3">Min. Reseller: 13 pouch</p>
+                            </div>
+                            <div>
+                                <div class="mb-3">
+                                    <p id="price-display-reguler" class="text-xl font-extrabold text-choco-900">Rp 25.000</p>
+                                    <p id="subprice-display-reguler" class="text-[11px] font-semibold text-gold-600">Reseller: Rp 22.000 (min. 13)</p>
+                                </div>
+                                <div class="flex items-center justify-between bg-cream-100 rounded-xl p-1 border border-cream-300">
+                                    <button type="button" onclick="changeQty('reguler', -1)" aria-label="Kurangi Paket Isi 12 pcs" class="w-9 h-9 rounded-lg bg-white hover:bg-choco-900 hover:text-white text-choco-900 flex items-center justify-center shadow-sm transition">
+                                        <i data-lucide="minus" class="w-4 h-4"></i>
+                                    </button>
+                                    <input type="number" id="qty-reguler" min="0" value="1" onchange="handleQtyInput('reguler', this.value)" aria-label="Jumlah pouch Paket Isi 12 pcs" class="w-12 text-center bg-transparent font-bold text-base text-choco-900 outline-none">
+                                    <button type="button" onclick="changeQty('reguler', 1)" aria-label="Tambah Paket Isi 12 pcs" class="w-9 h-9 rounded-lg bg-choco-900 hover:bg-choco-700 text-gold-400 flex items-center justify-center shadow-sm transition">
+                                        <i data-lucide="plus" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                                <button type="button" id="set-min-btn-reguler" onclick="setMinReseller('reguler')" class="hidden mt-2 w-full py-1.5 px-2.5 rounded-lg bg-amber-100 hover:bg-amber-200 border border-amber-400 text-amber-950 text-[11px] font-bold transition">
+                                    Set ke Min. Reseller (13)
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Paket Isi 16 pcs -->
+                        <div id="card-pkg-sharing" class="bg-white rounded-3xl p-5 border border-cream-300 hover:border-gold-500 transition shadow-sm flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between gap-1 mb-2">
+                                    <span class="inline-block px-2.5 py-0.5 rounded-full bg-cream-200 text-choco-800 text-[11px] font-bold">Isi 16 pcs</span>
+                                    <span id="status-badge-sharing" class="hidden px-2 py-0.5 rounded-full text-[10px] font-bold"></span>
+                                </div>
+                                <h3 class="font-serif text-lg font-bold text-choco-900">Paket Isi 16 pcs</h3>
+                                <p class="text-xs text-choco-700 mt-1 mb-2">Isi lebih banyak untuk kumpul santai atau hantaran.</p>
+                                <p id="min-hint-sharing" class="text-[11px] text-choco-600 font-medium mb-3">Min. Reseller: 10 pouch</p>
+                            </div>
+                            <div>
+                                <div class="mb-3">
+                                    <p id="price-display-sharing" class="text-xl font-extrabold text-choco-900">Rp 31.500</p>
+                                    <p id="subprice-display-sharing" class="text-[11px] font-semibold text-gold-600">Reseller: Rp 28.500 (min. 10)</p>
+                                </div>
+                                <div class="flex items-center justify-between bg-cream-100 rounded-xl p-1 border border-cream-300">
+                                    <button type="button" onclick="changeQty('sharing', -1)" aria-label="Kurangi Paket Isi 16 pcs" class="w-9 h-9 rounded-lg bg-white hover:bg-choco-900 hover:text-white text-choco-900 flex items-center justify-center shadow-sm transition">
+                                        <i data-lucide="minus" class="w-4 h-4"></i>
+                                    </button>
+                                    <input type="number" id="qty-sharing" min="0" value="0" onchange="handleQtyInput('sharing', this.value)" aria-label="Jumlah pouch Paket Isi 16 pcs" class="w-12 text-center bg-transparent font-bold text-base text-choco-900 outline-none">
+                                    <button type="button" onclick="changeQty('sharing', 1)" aria-label="Tambah Paket Isi 16 pcs" class="w-9 h-9 rounded-lg bg-choco-900 hover:bg-choco-700 text-gold-400 flex items-center justify-center shadow-sm transition">
+                                        <i data-lucide="plus" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                                <button type="button" id="set-min-btn-sharing" onclick="setMinReseller('sharing')" class="hidden mt-2 w-full py-1.5 px-2.5 rounded-lg bg-amber-100 hover:bg-amber-200 border border-amber-400 text-amber-950 text-[11px] font-bold transition">
+                                    Set ke Min. Reseller (10)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ringkasan Subtotal & Input Pemesan -->
+                    <div class="bg-white rounded-3xl p-6 sm:p-7 border border-cream-300 shadow-card">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                            <h3 class="font-serif text-xl font-bold text-choco-900 flex items-center gap-2">
+                                <i data-lucide="calculator" class="w-5 h-5 text-gold-600"></i>
+                                <span>Ringkasan Pesanan &amp; Checkout WhatsApp</span>
+                            </h3>
+                            <span id="active-mode-badge" class="px-3 py-1 rounded-full bg-gold-500/15 text-choco-900 text-xs font-bold">Mode: Pembeli Umum</span>
+                        </div>
+
+                        <!-- Panel Peringatan / Status Kunci Minimum Order Reseller -->
+                        <div id="reseller-lock-alert" class="hidden mb-4 p-4 rounded-2xl bg-amber-50 border-2 border-amber-400 text-amber-950">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div class="flex items-start gap-2.5">
+                                    <i data-lucide="lock" class="w-5 h-5 text-amber-700 shrink-0 mt-0.5"></i>
+                                    <div>
+                                        <p class="font-bold text-xs sm:text-sm">Checkout Reseller Terkunci — Belum Memenuhi Minimum Order</p>
+                                        <p id="reseller-lock-detail" class="text-xs text-amber-900 mt-0.5 leading-relaxed"></p>
+                                    </div>
+                                </div>
+                                <button type="button" id="btn-fix-all-reseller" onclick="applyAllMinimumReseller()" class="shrink-0 inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-choco-950 font-extrabold text-xs shadow-sm transition">
+                                    <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                                    <span>Set ke Min. Reseller</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-cream-100 rounded-2xl p-4 border border-cream-300 mb-5 space-y-2 text-sm">
+                            <div id="subtotal-items" class="space-y-2 text-choco-800"></div>
+                            <div class="border-t border-cream-300 pt-2.5 flex items-center justify-between font-extrabold text-base sm:text-lg text-choco-900">
+                                <span>Total Pesanan</span>
+                                <span id="subtotal-amount">Rp 25.000</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+                            <div>
+                                <label for="buyer-name" class="block text-xs font-bold text-choco-800 uppercase tracking-wider mb-1.5">Nama Pemesan *</label>
+                                <input type="text" id="buyer-name" placeholder="Nama lengkap Anda" class="w-full px-4 py-3 rounded-xl bg-cream-50 border border-cream-300 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-sm text-choco-900">
+                            </div>
+                            <div>
+                                <label for="buyer-notes" class="block text-xs font-bold text-choco-800 uppercase tracking-wider mb-1.5">Catatan Tambahan</label>
+                                <input type="text" id="buyer-notes" placeholder="Contoh: Alamat pengiriman / waktu ambil" class="w-full px-4 py-3 rounded-xl bg-cream-50 border border-cream-300 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-sm text-choco-900">
+                            </div>
+                        </div>
+
+                        <button type="button" id="btn-checkout-wa" onclick="checkoutWhatsApp()" class="w-full py-4 px-6 rounded-2xl gold-btn text-choco-950 font-extrabold text-sm sm:text-base shadow-gold hover:brightness-105 transition flex items-center justify-center gap-2.5">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                            <span id="btn-checkout-label">Pesan via WhatsApp (089656660841)</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. VIDEO PRODUK ASLI GRUPI COKLAT PISANG -->
+    <section id="video-produk" class="py-16 sm:py-24 bg-cream-200/75 border-t border-cream-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-choco-900 rounded-[2rem] p-6 sm:p-10 lg:p-12 text-cream-100 border-2 border-gold-500/40 shadow-2xl">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+                    <!-- Informasi Video -->
+                    <div class="lg:col-span-5 space-y-4">
+                        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gold-500/15 border border-gold-500/40 text-gold-300 text-xs font-bold uppercase tracking-wider">
+                            <i data-lucide="video" class="w-4 h-4 text-gold-400"></i> Video Produk Asli
+                        </span>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white leading-tight">
+                            Lihat Tekstur &amp; Kemasan GRUPI COKLAT PISANG
+                        </h2>
+                        <p class="text-cream-200/90 text-sm sm:text-base leading-relaxed">
+                            Putar video produk resmi GRUPI COKLAT PISANG untuk melihat langsung tampilan kemasan pouch panda serta butiran cokelat pisang yang kering renyah dan gurih.
+                        </p>
+
+                        <div class="p-4 rounded-2xl bg-choco-950/85 border border-gold-500/25 space-y-2 text-xs sm:text-sm">
+                            <div class="flex items-center justify-between text-cream-200">
+                                <span>Paket Isi 6 pcs</span>
+                                <span class="font-bold text-gold-300">Rp 17.000 <span class="text-cream-300/75 font-normal">/ Reseller Rp 14.000 (min. 20)</span></span>
+                            </div>
+                            <div class="flex items-center justify-between text-cream-200">
+                                <span>Paket Isi 12 pcs</span>
+                                <span class="font-bold text-gold-300">Rp 25.000 <span class="text-cream-300/75 font-normal">/ Reseller Rp 22.000 (min. 13)</span></span>
+                            </div>
+                            <div class="flex items-center justify-between text-cream-200">
+                                <span>Paket Isi 16 pcs</span>
+                                <span class="font-bold text-gold-300">Rp 31.500 <span class="text-cream-300/75 font-normal">/ Reseller Rp 28.500 (min. 10)</span></span>
+                            </div>
+                        </div>
+
+                        <div class="pt-1">
+                            <a href="https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/video%20Produk.mp4" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-choco-800 hover:bg-choco-700 border border-gold-500/40 text-gold-300 font-semibold text-xs sm:text-sm transition">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                                <span>Buka File Video di Tab Baru</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Pemutar Video HTML5 -->
+                    <div class="lg:col-span-7">
+                        <div class="rounded-3xl overflow-hidden bg-choco-950 border-2 border-gold-500/50 shadow-2xl">
+                            <video
+                                id="grupi-video"
+                                controls
+                                playsinline
+                                preload="metadata"
+                                poster="https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/Banner.jpg"
+                                class="w-full h-auto max-h-[480px] object-contain mx-auto bg-choco-950"
+                            >
+                                <source id="grupi-video-source" src="https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/video%20Produk.mp4" type="video/mp4">
+                                Browser Anda tidak mendukung pemutar video HTML5. Silakan buka tautan video langsung.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. BARCODE / QR CODE AKSES WEBSITE KONSUMEN & SCAN PEMESANAN WHATSAPP -->
+    <section id="barcode-website" class="py-16 sm:py-24 bg-cream-100 border-b border-cream-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-gold-600 font-bold tracking-[0.2em] text-xs uppercase block mb-2">Akses Konsumen &amp; Cetak Barcode</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-choco-900 mb-3">Barcode / QR Code Website GRUPI COKLAT PISANG</h2>
+                <p class="text-choco-700 text-sm sm:text-base">
+                    Konsumen cukup memindai QR Code website di bawah ini untuk membuka katalog &amp; profil usaha secara langsung, serta dapat menggunakan kartu QR WhatsApp resmi untuk chat cepat.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Kolom Kiri (7 Kolom): Generator QR Code Website Otomatis, Kustom URL, Unduh & Cetak -->
+                <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-cream-300 shadow-card space-y-6">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/15 text-choco-900 text-xs font-bold uppercase tracking-wider">
+                                <i data-lucide="qr-code" class="w-3.5 h-3.5 text-gold-600"></i> QR Code Akses Website
+                            </span>
+                            <h3 class="font-serif text-2xl font-bold text-choco-900 mt-1.5">Pindai untuk Membuka Website</h3>
+                        </div>
+                        <button type="button" onclick="resetToActiveSiteUrl()" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-cream-100 hover:bg-cream-200 border border-cream-300 text-choco-900 text-xs font-bold transition">
+                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                            <span>Gunakan URL Aktif</span>
+                        </button>
+                    </div>
+
+                    <!-- Kartu QR Code yang Bisa Dicetak -->
+                    <div id="printable-qr-card" class="bg-cream-50 rounded-3xl p-6 border-2 border-gold-500/50 text-center space-y-3 max-w-md mx-auto shadow-sm">
+                        <div class="flex items-center justify-center gap-2.5">
+                            <img
+                                src="https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/LOGO.png"
+                                data-fallback="https://github.com/projectpanca/grupi-coklat-pisang/blob/ece2155fa8fec30a382882c5622afd2081d2b963/LOGO.png?raw=true"
+                                data-placeholder="https://placehold.co/64x64/2A160E/E5C158?text=GRUPI"
+                                onerror="handleImageError(this)"
+                                alt="Logo GRUPI COKLAT PISANG"
+                                class="w-10 h-10 rounded-full object-contain bg-white p-0.5 border border-cream-300"
+                            >
+                            <div class="text-left">
+                                <p class="font-serif font-extrabold text-choco-900 text-base leading-none">GRUPI COKLAT PISANG</p>
+                                <p class="text-[11px] text-choco-700 mt-0.5">Scan untuk Katalog, Harga &amp; Pesan</p>
+                            </div>
+                        </div>
+
+                        <div id="website-qr-canvas" class="bg-white p-4 rounded-2xl border border-cream-300 inline-block mx-auto"></div>
+
+                        <p id="qr-target-url-label" class="font-mono text-xs text-choco-800 bg-white px-3 py-2 rounded-xl border border-cream-200 break-all">
+                            https://projectpanca.github.io/grupi-coklat-pisang/
+                        </p>
+                        <p class="text-[11px] text-choco-600">
+                            NIB: 0211260083696 &bull; P-IRT: 2043273014711-31 &bull; WA: 089656660841
+                        </p>
+                    </div>
+
+                    <!-- Input Kustom Link Website -->
+                    <div class="space-y-2">
+                        <label for="custom-site-url" class="block text-xs font-bold text-choco-800 uppercase tracking-wider">
+                            Link Tujuan QR Code Website (Otomatis dari Browser / Bisa Disesuaikan)
+                        </label>
+                        <div class="flex flex-col sm:flex-row gap-2.5">
+                            <input
+                                type="url"
+                                id="custom-site-url"
+                                value="https://projectpanca.github.io/grupi-coklat-pisang/"
+                                oninput="handleCustomUrlInput(this.value)"
+                                placeholder="https://projectpanca.github.io/grupi-coklat-pisang/"
+                                class="flex-1 px-4 py-3 rounded-xl bg-cream-50 border border-cream-300 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none text-xs sm:text-sm font-mono text-choco-900"
+                            >
+                            <button type="button" onclick="copyCurrentQrUrl()" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-choco-900 hover:bg-choco-800 text-gold-300 font-bold text-xs sm:text-sm transition shrink-0">
+                                <i data-lucide="copy" class="w-4 h-4"></i>
+                                <span>Salin Link</span>
+                            </button>
+                        </div>
+                        <p class="text-[11px] text-choco-600">
+                            Jika halaman dibuka langsung dari file lokal (<code class="font-mono">file://</code>), sistem otomatis memakai alamat GitHub Pages standar agar QR Code tetap bisa dipindai kamera ponsel.
+                        </p>
+                    </div>
+
+                    <!-- Tombol Unduh QR Resolusi Tinggi & Cetak Kartu -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                        <button type="button" onclick="downloadQrPng()" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl gold-btn text-choco-950 font-extrabold text-xs sm:text-sm shadow-gold hover:brightness-105 transition">
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            <span>Unduh QR (PNG)</span>
+                        </button>
+                        <button type="button" onclick="downloadQrSvg()" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-choco-900 hover:bg-choco-800 text-gold-300 font-bold text-xs sm:text-sm transition">
+                            <i data-lucide="file-code" class="w-4 h-4"></i>
+                            <span>Unduh QR (SVG)</span>
+                        </button>
+                        <button type="button" onclick="printQrCard()" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-cream-200 hover:bg-cream-300 text-choco-900 font-bold text-xs sm:text-sm transition">
+                            <i data-lucide="printer" class="w-4 h-4"></i>
+                            <span>Cetak Kartu QR</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan (5 Kolom): Kartu Scan Pemesanan WhatsApp Resmi -->
+                <div class="lg:col-span-5 bg-choco-900 rounded-[2rem] p-6 sm:p-8 text-cream-100 border-2 border-gold-500/40 shadow-2xl space-y-5">
+                    <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gold-500/15 border border-gold-500/40 text-gold-300 text-xs font-bold uppercase tracking-wider">
+                        <i data-lucide="scan-line" class="w-4 h-4"></i> Scan Pemesanan WhatsApp
+                    </span>
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white leading-tight">
+                        Scan untuk Pesan Langsung ke WhatsApp
+                    </h3>
+                    <p class="text-cream-200/90 text-xs sm:text-sm leading-relaxed">
+                        Kartu barcode pemesanan resmi <strong>GRUPI COKLAT PISANG</strong> untuk terhubung langsung ke WhatsApp pemilik usaha (<strong>089656660841</strong>).
+                    </p>
+
+                    <div class="bg-cream-50 text-choco-900 rounded-3xl p-4 border-2 border-gold-500 shadow-xl max-w-[300px] mx-auto">
+                        <img
+                            src="https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/Scan%20Pemesanan.jpg"
+                            data-fallback="https://github.com/projectpanca/grupi-coklat-pisang/blob/ece2155fa8fec30a382882c5622afd2081d2b963/Scan%20Pemesanan.jpg?raw=true"
+                            data-placeholder="https://placehold.co/540x540/FAF5EE/2A160E?text=Scan+Pemesanan+GRUPI"
+                            onerror="handleImageError(this)"
+                            alt="Scan Untuk Pesan Order Now GRUPI Coklat Pisang"
+                            class="w-full h-auto rounded-2xl object-contain mx-auto"
+                        >
+                    </div>
+
+                    <div class="flex flex-wrap gap-2.5 pt-1">
+                        <a href="https://wa.me/6289656660841?text=Halo%20GRUPI%20COKLAT%20PISANG,%20saya%20scan%20QR%20dan%20ingin%20memesan." target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl gold-btn text-choco-950 font-extrabold text-xs sm:text-sm shadow-gold hover:brightness-105 transition">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            <span>Chat WhatsApp</span>
+                        </a>
+                        <button type="button" onclick="openQrModal()" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-choco-800 hover:bg-choco-700 border border-gold-500/40 text-gold-300 font-bold text-xs sm:text-sm transition">
+                            <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                            <span>Perbesar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. LEGALITAS USAHA, KOMPOSISI & ALAMAT PRODUKSI -->
+    <section id="legalitas" class="py-16 sm:py-24 bg-cream-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-gold-600 font-bold tracking-[0.2em] text-xs uppercase block mb-2">Informasi Usaha &amp; Perizinan</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-choco-900 mb-3">Legalitas, Data Pelengkap &amp; Lokasi Produksi</h2>
+                <p class="text-choco-700 text-sm sm:text-base">
+                    Identitas pelaku usaha, Nomor Induk Berusaha (NIB), sertifikat pemenuhan komitmen SPP-IRT, komposisi resmi, kontak, dan alamat produksi di Bandung.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Pemilik Perusahaan -->
+                <div class="bg-white rounded-3xl p-6 border border-cream-300 shadow-sm">
+                    <div class="w-11 h-11 rounded-2xl bg-choco-900 text-gold-400 flex items-center justify-center mb-4">
+                        <i data-lucide="user-check" class="w-5 h-5"></i>
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-wider text-choco-600 mb-1">Pemilik / Pelaku Usaha</p>
+                    <p class="font-serif text-xl font-bold text-choco-900">ABDUL GHOFAR</p>
+                    <p class="text-xs text-choco-700 mt-1">Brand Pangan: <strong>Grupi</strong> &bull; Produk: <strong>Coklat Pisang</strong></p>
+                </div>
+
+                <!-- Nomor Induk Berusaha (NIB) -->
+                <div class="bg-white rounded-3xl p-6 border border-cream-300 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-2xl bg-choco-900 text-gold-400 flex items-center justify-center">
+                            <i data-lucide="badge-check" class="w-5 h-5"></i>
+                        </div>
+                        <button type="button" onclick="copyText('0211260083696', 'No. NIB 0211260083696 berhasil disalin!')" class="text-xs font-bold text-gold-600 hover:text-choco-900 inline-flex items-center gap-1">
+                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> Salin
+                        </button>
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-wider text-choco-600 mb-1">Nomor Induk Berusaha (NIB)</p>
+                    <p class="font-mono text-base sm:text-lg font-bold text-choco-900 break-all">0211260083696</p>
+                    <p class="text-[11px] text-choco-700 mt-1">Skala Usaha: <strong>Usaha Mikro</strong> &bull; Terbit: 2 Nov 2026</p>
+                </div>
+
+                <!-- Sertifikat SPP-IRT -->
+                <div class="bg-white rounded-3xl p-6 border border-cream-300 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-2xl bg-choco-900 text-gold-400 flex items-center justify-center">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        </div>
+                        <button type="button" onclick="copyText('P-IRT 2043273014711-31', 'No. SPP-IRT P-IRT 2043273014711-31 berhasil disalin!')" class="text-xs font-bold text-gold-600 hover:text-choco-900 inline-flex items-center gap-1">
+                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> Salin
+                        </button>
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-wider text-choco-600 mb-1">Nomor SPP-IRT</p>
+                    <p class="font-mono text-sm sm:text-base font-bold text-choco-900 break-all">P-IRT 2043273014711-31</p>
+                    <p class="text-[11px] text-choco-700 mt-1">Status: <strong>Terbit Sementara</strong> &bull; Berlaku s.d. 16/11/2031</p>
+                </div>
+
+                <!-- Kontak Pemilik Perusahaan -->
+                <div class="bg-white rounded-3xl p-6 border border-cream-300 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-2xl bg-choco-900 text-gold-400 flex items-center justify-center">
+                            <i data-lucide="phone-call" class="w-5 h-5"></i>
+                        </div>
+                        <button type="button" onclick="copyText('089656660841', 'Kontak 089656660841 berhasil disalin!')" class="text-xs font-bold text-gold-600 hover:text-choco-900 inline-flex items-center gap-1">
+                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> Salin
+                        </button>
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-wider text-choco-600 mb-1">Kontak Pemilik Perusahaan</p>
+                    <a href="https://wa.me/6289656660841" target="_blank" rel="noopener noreferrer" class="font-mono text-base sm:text-lg font-bold text-choco-900 hover:text-gold-600 transition block">089656660841</a>
+                    <p class="text-[11px] text-choco-700 mt-1 break-all">Email: ghofarpanca@gmail.com</p>
+                </div>
+            </div>
+
+            <!-- Rincian Administrasi Tambahan (NPWP, No. Responden, PB UMKU, KBLI & Komposisi) -->
+            <div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="bg-white rounded-3xl p-5 border border-cream-300 shadow-sm space-y-2 text-xs sm:text-sm">
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="font-bold text-choco-600 uppercase tracking-wider text-[11px]">NPWP</span>
+                        <button type="button" onclick="copyText('530253210423000', 'NPWP 530253210423000 berhasil disalin!')" class="text-xs font-bold text-gold-600 hover:text-choco-900 inline-flex items-center gap-1">
+                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> Salin
+                        </button>
+                    </div>
+                    <p class="font-mono font-bold text-choco-900 text-base break-all">530253210423000</p>
+                    <p class="text-xs text-choco-700 pt-1 border-t border-cream-200">
+                        <strong>Nomor Responden:</strong> <span class="font-mono font-bold text-choco-900">100312646</span>
+                        <button type="button" onclick="copyText('100312646', 'Nomor Responden 100312646 berhasil disalin!')" class="ml-2 text-gold-600 hover:text-choco-900 font-bold text-xs underline">Salin</button>
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-3xl p-5 border border-cream-300 shadow-sm space-y-1.5 text-xs sm:text-sm">
+                    <span class="font-bold text-choco-600 uppercase tracking-wider text-[11px] block">KBLI &amp; PB UMKU</span>
+                    <p class="font-semibold text-choco-900">KBLI 10309 — Pengolahan dan Pengawetan Lainnya untuk Buah-buahan dan Sayuran</p>
+                    <p class="text-xs text-choco-700">Jenis Pangan: <strong>keripik buah</strong> &bull; Produk: <strong>Coklat Pisang</strong></p>
+                    <p class="text-[11px] font-mono text-choco-700 break-all">PB UMKU: 021126008369600000001</p>
+                </div>
+
+                <div class="bg-white rounded-3xl p-5 border border-cream-300 shadow-sm space-y-1.5 text-xs sm:text-sm">
+                    <span class="font-bold text-choco-600 uppercase tracking-wider text-[11px] block">Komposisi &amp; Kemasan Primer</span>
+                    <p class="text-xs sm:text-sm text-choco-900 font-medium">
+                        pisang tanduk, coklat compound, coklat bubuk, minyak goreng, garam.
+                    </p>
+                    <p class="text-xs text-choco-700">Kemasan Primer: <strong>Plastik</strong></p>
+                </div>
+            </div>
+
+            <!-- Kartu Alamat Produksi -->
+            <div class="mt-6 bg-white rounded-3xl p-6 sm:p-8 border border-cream-300 shadow-card flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-gold-500/15 border border-gold-500/40 text-gold-600 flex items-center justify-center shrink-0 mt-0.5">
+                        <i data-lucide="map-pin" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider text-choco-600 mb-1">Alamat Produksi</p>
+                        <p class="text-base sm:text-lg font-bold text-choco-900 leading-snug">
+                            Jl. Sekepanjang 3 No. 10 Rt03/rw 11 kel. Cibeunying kidul kec. Cikutra, Kode pos: 40124, Kota Bandung, Provinsi Jawa Barat
+                        </p>
+                        <p class="text-xs sm:text-sm text-choco-700 mt-1">Pemilik: ABDUL GHOFAR &bull; Kontak: 089656660841 &bull; NPWP: 530253210423000 &bull; No. Responden: 100312646</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-3 shrink-0">
+                    <button type="button" onclick="copyText('Jl. Sekepanjang 3 No. 10 Rt03/rw 11 kel. Cibeunying kidul kec. Cikutra, Kode pos: 40124, Kota Bandung, Provinsi Jawa Barat', 'Alamat produksi berhasil disalin!')" class="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-cream-200 hover:bg-cream-300 text-choco-900 font-bold text-xs sm:text-sm transition">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                        <span>Salin Alamat</span>
+                    </button>
+                    <a href="https://maps.google.com/?q=Jl.+Sekepanjang+3+No.+10+Cikutra+Cibeunying+Kidul+Bandung+40124" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-3 rounded-xl gold-btn text-choco-950 font-bold text-xs sm:text-sm shadow-gold hover:brightness-105 transition">
+                        <i data-lucide="navigation" class="w-4 h-4"></i>
+                        <span>Buka di Peta</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. FOOTER -->
+    <footer class="bg-choco-950 text-cream-200 border-t border-gold-500/25 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <div class="flex items-center gap-3">
+                <img
+                    src="https://raw.githubusercontent.com/projectpanca/grupi-coklat-pisang/main/LOGO.png"
+                    data-fallback="https://github.com/projectpanca/grupi-coklat-pisang/blob/ece2155fa8fec30a382882c5622afd2081d2b963/LOGO.png?raw=true"
+                    data-placeholder="https://placehold.co/64x64/2A160E/E5C158?text=GRUPI"
+                    onerror="handleImageError(this)"
+                    alt="Logo GRUPI COKLAT PISANG"
+                    class="w-10 h-10 rounded-full object-contain bg-cream-50 p-0.5 border border-gold-500/50"
+                >
+                <div>
+                    <p class="font-serif font-bold text-white text-sm sm:text-base">GRUPI COKLAT PISANG</p>
+                    <p class="text-xs text-cream-300/80">Pemilik: ABDUL GHOFAR &bull; NIB: 0211260083696 &bull; P-IRT: 2043273014711-31 &bull; NPWP: 530253210423000 &bull; No. Responden: 100312646</p>
+                </div>
+            </div>
+            <p class="text-xs text-cream-300/75">
+                Jl. Sekepanjang 3 No. 10 Rt03/rw 11 kel. Cibeunying kidul kec. Cikutra, Kode pos: 40124, Kota Bandung, Provinsi Jawa Barat
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Konstanta alamat produksi & kontak resmi untuk format pesan WhatsApp
+        const OFFICIAL_ADDRESS = 'Jl. Sekepanjang 3 No. 10 Rt03/rw 11 kel. Cibeunying kidul kec. Cikutra, Kode pos: 40124, Kota Bandung, Provinsi Jawa Barat';
+        const OFFICIAL_WHATSAPP_NUMBER = '6289656660841';
+        const DEFAULT_PUBLIC_SITE_URL = 'https://projectpanca.github.io/grupi-coklat-pisang/';
+
+        // Inisialisasi ikon Lucide secara aman
+        try {
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
+        } catch (err) {
+            // Abaikan error ikon eksternal agar skrip utama tetap berjalan
+        }
+
+        // Helper aman untuk mengambil elemen DOM berdasarkan ID
+        function byId(id) {
+            return document.getElementById(id) || null;
+        }
+
+        // Penanganan error pemuatan gambar: coba URL fallback lalu placeholder aman
+        function handleImageError(imgEl) {
+            if (!imgEl) return;
+            try {
+                if (!imgEl.dataset.fallbackTried && imgEl.dataset.fallback) {
+                    imgEl.dataset.fallbackTried = '1';
+                    imgEl.src = imgEl.dataset.fallback;
+                    return;
+                }
+                if (!imgEl.dataset.placeholderTried && imgEl.dataset.placeholder) {
+                    imgEl.dataset.placeholderTried = '1';
+                    imgEl.src = imgEl.dataset.placeholder;
+                }
+            } catch (err) {
+                // Tidak melempar error ke konsol
+            }
+        }
+
+        // Ganti tampilan foto utama galeri produk
+        function selectGalleryImage(primaryUrl, fallbackUrl, altText) {
+            const imgEl = byId('main-product-gallery-img');
+            if (!imgEl) return;
+            delete imgEl.dataset.fallbackTried;
+            delete imgEl.dataset.placeholderTried;
+            imgEl.dataset.fallback = fallbackUrl || '';
+            imgEl.alt = altText || 'Foto Produk GRUPI COKLAT PISANG';
+            imgEl.src = primaryUrl;
+        }
+
+        // Mode harga aktif: 'umum' (Pembeli Umum) atau 'reseller' (Reseller)
+        let priceMode = 'umum';
+
+        // Data paket kemasan GRUPI COKLAT PISANG
+        const packages = {
+            mini: {
+                label: 'Isi 6 pcs',
+                umum: 17000,
+                reseller: 14000,
+                minReseller: 20,
+                qty: 0
+            },
+            reguler: {
+                label: 'Isi 12 pcs',
+                umum: 25000,
+                reseller: 22000,
+                minReseller: 13,
+                qty: 1
+            },
+            sharing: {
+                label: 'Isi 16 pcs',
+                umum: 31500,
+                reseller: 28500,
+                minReseller: 10,
+                qty: 0
+            }
+        };
+
+        function syncQtyInput(key) {
+            const inputEl = byId(`qty-${key}`);
+            const item = packages[key];
+            if (!inputEl || !item) return;
+            const safeQty = Math.max(0, Math.floor(Number(item.qty) || 0));
+            item.qty = safeQty;
+            inputEl.value = String(safeQty);
+        }
+
+        function formatIDR(val) {
+            const num = Number(val);
+            return 'Rp ' + (Number.isFinite(num) ? num : 0).toLocaleString('id-ID');
+        }
+
+        function isResellerEligible(item) {
+            return Boolean(item) && item.qty >= item.minReseller;
+        }
+
+        function getUnmetResellerItems() {
+            return Object.keys(packages)
+                .map((key) => ({ key, ...packages[key] }))
+                .filter((item) => item.qty > 0 && !isResellerEligible(item));
+        }
+
+        function getUnitPrice(item) {
+            if (!item) return 0;
+            if (priceMode === 'reseller') {
+                return isResellerEligible(item) ? item.reseller : item.umum;
+            }
+            return item.umum;
+        }
+
+        function setPriceMode(mode) {
+            if (mode !== 'umum' && mode !== 'reseller') return;
+            priceMode = mode;
+
+            const btnUmum = byId('btn-mode-umum');
+            const btnReseller = byId('btn-mode-reseller');
+            const modeBadge = byId('active-mode-badge');
+
+            if (mode === 'reseller') {
+                if (btnReseller) {
+                    btnReseller.className = 'inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition gold-btn text-choco-950 shadow';
+                }
+                if (btnUmum) {
+                    btnUmum.className = 'inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition text-choco-800 hover:text-choco-950';
+                }
+                if (modeBadge) {
+                    modeBadge.textContent = 'Mode: Reseller';
+                }
+                showToast('Mode Reseller aktif. Periksa minimum order tiap paket.', 'ok');
+            } else {
+                if (btnUmum) {
+                    btnUmum.className = 'inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition gold-btn text-choco-950 shadow';
+                }
+                if (btnReseller) {
+                    btnReseller.className = 'inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition text-choco-800 hover:text-choco-950';
+                }
+                if (modeBadge) {
+                    modeBadge.textContent = 'Mode: Pembeli Umum';
+                }
+                showToast('Beralih ke mode Pembeli Umum.', 'ok');
+            }
+
+            renderPriceLabels();
+            updateSubtotal();
+        }
+
+        function setMinReseller(key) {
+            const item = packages[key];
+            if (!item) return;
+            item.qty = Math.max(1, item.minReseller);
+            syncQtyInput(key);
+            showToast(`${item.label} diset ke minimum Reseller (${item.minReseller} pouch).`, 'ok');
+            renderPriceLabels();
+            updateSubtotal();
+        }
+
+        function applyAllMinimumReseller() {
+            const unmet = getUnmetResellerItems();
+            if (unmet.length === 0) {
+                setMinReseller('reguler');
+                return;
+            }
+            unmet.forEach((entry) => {
+                packages[entry.key].qty = Math.max(1, packages[entry.key].minReseller);
+                syncQtyInput(entry.key);
+            });
+            showToast('Jumlah disesuaikan ke minimum order Reseller.', 'ok');
+            renderPriceLabels();
+            updateSubtotal();
+        }
+
+        function renderPriceLabels() {
+            Object.keys(packages).forEach((key) => {
+                const item = packages[key];
+                if (!item) return;
+
+                const priceEl = byId(`price-display-${key}`);
+                const subpriceEl = byId(`subprice-display-${key}`);
+                const badgeEl = byId(`status-badge-${key}`);
+                const setMinBtn = byId(`set-min-btn-${key}`);
+                const cardEl = byId(`card-pkg-${key}`);
+                const eligible = isResellerEligible(item);
+
+                if (priceMode === 'reseller') {
+                    if (eligible) {
+                        if (priceEl) priceEl.textContent = formatIDR(item.reseller);
+                        if (subpriceEl) {
+                            subpriceEl.textContent = `Harga Reseller aktif (Umum: ${formatIDR(item.umum)})`;
+                            subpriceEl.className = 'text-[11px] font-bold text-emerald-700';
+                        }
+                        if (badgeEl) {
+                            badgeEl.textContent = `Min. ${item.minReseller} OK`;
+                            badgeEl.className = 'inline-block px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] font-bold';
+                        }
+                        if (setMinBtn) setMinBtn.classList.add('hidden');
+                        if (cardEl) cardEl.classList.remove('border-amber-400');
+                    } else {
+                        if (priceEl) priceEl.textContent = formatIDR(item.umum);
+                        if (subpriceEl) {
+                            subpriceEl.textContent = `Reseller ${formatIDR(item.reseller)} mulai ${item.minReseller} pouch`;
+                            subpriceEl.className = 'text-[11px] font-semibold text-amber-800';
+                        }
+                        if (badgeEl) {
+                            badgeEl.textContent = `Min. ${item.minReseller} pouch`;
+                            badgeEl.className = 'inline-block px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-400 text-[10px] font-bold';
+                        }
+                        if (setMinBtn) setMinBtn.classList.remove('hidden');
+                        if (cardEl) cardEl.classList.add('border-amber-400');
+                    }
+                } else {
+                    if (priceEl) priceEl.textContent = formatIDR(item.umum);
+                    if (subpriceEl) {
+                        subpriceEl.textContent = `Reseller: ${formatIDR(item.reseller)} (min. ${item.minReseller})`;
+                        subpriceEl.className = 'text-[11px] font-semibold text-gold-600';
+                    }
+                    if (badgeEl) badgeEl.classList.add('hidden');
+                    if (setMinBtn) setMinBtn.classList.add('hidden');
+                    if (cardEl) cardEl.classList.remove('border-amber-400');
+                }
+            });
+        }
+
+        function changeQty(key, delta) {
+            const item = packages[key];
+            if (!item) return;
+            const nextQty = Math.max(0, (Number(item.qty) || 0) + Number(delta || 0));
+            item.qty = nextQty;
+            syncQtyInput(key);
+            renderPriceLabels();
+            updateSubtotal();
+        }
+
+        function handleQtyInput(key, rawValue) {
+            const item = packages[key];
+            if (!item) return;
+            const parsed = parseInt(rawValue, 10);
+            item.qty = Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+            syncQtyInput(key);
+            renderPriceLabels();
+            updateSubtotal();
+        }
+
+        function updateResellerLockState(hasSelectedItem) {
+            const alertBox = byId('reseller-lock-alert');
+            const detailEl = byId('reseller-lock-detail');
+            const btnCheckout = byId('btn-checkout-wa');
+            const btnLabel = byId('btn-checkout-label');
+
+            if (priceMode !== 'reseller') {
+                if (alertBox) alertBox.classList.add('hidden');
+                if (btnCheckout) {
+                    btnCheckout.disabled = false;
+                    btnCheckout.classList.remove('opacity-50', 'cursor-not-allowed', 'grayscale');
+                }
+                if (btnLabel) btnLabel.textContent = 'Pesan via WhatsApp (089656660841)';
+                return false;
+            }
+
+            const unmetItems = getUnmetResellerItems();
+            const isLocked = !hasSelectedItem || unmetItems.length > 0;
+
+            if (isLocked) {
+                if (alertBox) alertBox.classList.remove('hidden');
+                if (detailEl) {
+                    if (!hasSelectedItem) {
+                        detailEl.textContent = 'Pilih minimal 1 paket dengan jumlah memenuhi syarat Reseller (Isi 6 pcs: min. 20 pouch, Isi 12 pcs: min. 13 pouch, Isi 16 pcs: min. 10 pouch).';
+                    } else {
+                        const summary = unmetItems
+                            .map((u) => `${u.label}: ${u.qty} pouch (kurang ${u.minReseller - u.qty} dari min. ${u.minReseller})`)
+                            .join('; ');
+                        detailEl.textContent = `Minimum order belum terpenuhi — ${summary}. Harga Reseller berlaku setelah memenuhi batas minimum.`;
+                    }
+                }
+                if (btnCheckout) {
+                    btnCheckout.disabled = true;
+                    btnCheckout.classList.add('opacity-50', 'cursor-not-allowed', 'grayscale');
+                }
+                if (btnLabel) btnLabel.textContent = 'Terkunci — Penuhi Min. Order Reseller';
+                return true;
+            }
+
+            if (alertBox) alertBox.classList.add('hidden');
+            if (btnCheckout) {
+                btnCheckout.disabled = false;
+                btnCheckout.classList.remove('opacity-50', 'cursor-not-allowed', 'grayscale');
+            }
+            if (btnLabel) btnLabel.textContent = 'Pesan via WhatsApp (089656660841)';
+            return false;
+        }
+
+        function updateSubtotal() {
+            const listEl = byId('subtotal-items');
+            const totalEl = byId('subtotal-amount');
+            let lines = [];
+            let total = 0;
+            let selectedCount = 0;
+
+            Object.keys(packages).forEach((key) => {
+                const item = packages[key];
+                if (!item) return;
+                const qty = Math.max(0, Math.floor(Number(item.qty) || 0));
+                if (qty > 0) {
+                    selectedCount += 1;
+                    const unit = getUnitPrice(item);
+                    const sub = unit * qty;
+                    total += sub;
+
+                    const isUnmetReseller = priceMode === 'reseller' && !isResellerEligible(item);
+                    const statusNote = isUnmetReseller
+                        ? `<span class="ml-1.5 inline-block px-2 py-0.5 rounded bg-amber-100 text-amber-900 text-[10px] font-bold">Kurang ${item.minReseller - qty} (min. ${item.minReseller})</span>`
+                        : (priceMode === 'reseller'
+                            ? `<span class="ml-1.5 inline-block px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">Reseller</span>`
+                            : '');
+
+                    lines.push(`
+                        <div class="flex items-center justify-between gap-2">
+                            <span>${item.label} &times; <strong>${qty} pouch</strong> <span class="text-xs text-choco-600">(@ ${formatIDR(unit)})</span>${statusNote}</span>
+                            <span class="font-semibold shrink-0">${formatIDR(sub)}</span>
+                        </div>
+                    `);
+                }
+            });
+
+            if (listEl) {
+                if (lines.length === 0) {
+                    listEl.innerHTML = '<p class="text-xs italic text-choco-600">Belum ada paket yang dipilih. Tekan tombol (+) atau isi jumlah pouch.</p>';
+                } else {
+                    listEl.innerHTML = lines.join('');
+                }
+            }
+            if (totalEl) {
+                totalEl.textContent = formatIDR(total);
+            }
+            updateResellerLockState(selectedCount > 0);
+        }
+
+        function checkoutWhatsApp() {
+            if (priceMode === 'reseller') {
+                const unmetItems = getUnmetResellerItems();
+                if (unmetItems.length > 0) {
+                    const info = unmetItems.map((u) => `${u.label} min. ${u.minReseller} pouch`).join(', ');
+                    showToast(`Pesanan Reseller terkunci! Penuhi minimum order: ${info}.`, 'warn');
+                    updateSubtotal();
+                    return;
+                }
+            }
+
+            const nameInput = byId('buyer-name');
+            const notesInput = byId('buyer-notes');
+            const name = nameInput ? nameInput.value.trim() : '';
+            const notes = notesInput ? notesInput.value.trim() : '';
+            const modeLabel = priceMode === 'reseller' ? 'Reseller (Min. Order Terpenuhi)' : 'Pembeli Umum';
+
+            let total = 0;
+            let selectedLines = [];
+
+            Object.keys(packages).forEach((key) => {
+                const item = packages[key];
+                if (!item) return;
+                const qty = Math.max(0, Math.floor(Number(item.qty) || 0));
+                if (qty > 0) {
+                    const unit = getUnitPrice(item);
+                    const sub = unit * qty;
+                    total += sub;
+                    selectedLines.push(`- ${item.label}: ${qty} pouch @ ${formatIDR(unit)} = ${formatIDR(sub)}`);
+                }
+            });
+
+            if (selectedLines.length === 0) {
+                showToast('Pilih minimal 1 pouch terlebih dahulu.', 'warn');
+                return;
+            }
+            if (!name) {
+                showToast('Silakan isi Nama Pemesan terlebih dahulu.', 'warn');
+                if (nameInput) nameInput.focus();
+                return;
+            }
+
+            const textMessage = [
+                'Halo GRUPI COKLAT PISANG (Brand: Grupi - Coklat Pisang), saya ingin memesan:',
+                `Mode Pembelian: ${modeLabel}`,
+                ...selectedLines,
+                `Total Harga: ${formatIDR(total)}`,
+                `Nama Pemesan: ${name}`,
+                notes ? `Catatan Pembeli: ${notes}` : null,
+                `Kontak Pemilik: 089656660841`,
+                `Alamat Produksi: ${OFFICIAL_ADDRESS}`
+            ].filter(Boolean).join('\n');
+
+            const waLink = `https://wa.me/${OFFICIAL_WHATSAPP_NUMBER}?text=${encodeURIComponent(textMessage)}`;
+            showToast('Membuka WhatsApp dengan rincian pesanan...', 'ok');
+            window.open(waLink, '_blank', 'noopener,noreferrer');
+        }
+
+        // Generator & Pengelola Barcode / QR Code Website Konsumen
+        let currentQrText = DEFAULT_PUBLIC_SITE_URL;
+
+        function resolveInitialSiteUrl() {
+            try {
+                const href = String(window.location && window.location.href ? window.location.href : '');
+                if (/^https?:\/\//i.test(href)) {
+                    const cleanHref = href.split('#')[0];
+                    return cleanHref || DEFAULT_PUBLIC_SITE_URL;
+                }
+            } catch (err) {
+                // Gunakan default apabila akses lokasi dibatasi
+            }
+            return DEFAULT_PUBLIC_SITE_URL;
+        }
+
+        function renderWebsiteQr(targetUrl) {
+            const container = byId('website-qr-canvas');
+            const labelEl = byId('qr-target-url-label');
+            const inputEl = byId('custom-site-url');
+
+            const normalized = String(targetUrl || '').trim() || DEFAULT_PUBLIC_SITE_URL;
+            currentQrText = normalized;
+
+            if (labelEl) labelEl.textContent = normalized;
+            if (inputEl && document.activeElement !== inputEl) {
+                inputEl.value = normalized;
+            }
+
+            if (!container) return;
+            container.innerHTML = '';
+
+            try {
+                if (typeof window.QRCode === 'function') {
+                    new window.QRCode(container, {
+                        text: normalized,
+                        width: 212,
+                        height: 212,
+                        colorDark: '#2A160E',
+                        colorLight: '#FFFFFF',
+                        correctLevel: window.QRCode.CorrectLevel.H
+                    });
+                    return;
+                }
+            } catch (err) {
+                // Fallback ke gambar QR eksternal apabila library gagal dimuat
+            }
+
+            const fallbackImg = document.createElement('img');
+            fallbackImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=10&data=${encodeURIComponent(normalized)}`;
+            fallbackImg.alt = 'QR Code Website GRUPI COKLAT PISANG';
+            fallbackImg.className = 'w-52 h-52 mx-auto rounded-xl object-contain';
+            container.appendChild(fallbackImg);
+        }
+
+        let qrDebounceTimer = null;
+        function handleCustomUrlInput(val) {
+            const trimmed = String(val || '').trim();
+            if (!trimmed) return;
+            clearTimeout(qrDebounceTimer);
+            qrDebounceTimer = setTimeout(() => {
+                renderWebsiteQr(trimmed);
+            }, 180);
+        }
+
+        function resetToActiveSiteUrl() {
+            const detected = resolveInitialSiteUrl();
+            const inputEl = byId('custom-site-url');
+            if (inputEl) inputEl.value = detected;
+            renderWebsiteQr(detected);
+            showToast('QR Code diset ke URL website aktif.', 'ok');
+        }
+
+        function copyCurrentQrUrl() {
+            const inputEl = byId('custom-site-url');
+            const urlToCopy = (inputEl && inputEl.value.trim()) ? inputEl.value.trim() : currentQrText;
+            copyText(urlToCopy, 'Link website berhasil disalin!');
+        }
+
+        function downloadQrPng() {
+            const container = byId('website-qr-canvas');
+            if (!container) return;
+
+            try {
+                const canvas = container.querySelector('canvas');
+                if (canvas && typeof canvas.toDataURL === 'function') {
+                    const link = document.createElement('a');
+                    link.download = 'barcode-website-grupi-coklat-pisang.png';
+                    link.href = canvas.toDataURL('image/png');
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    showToast('Barcode QR (PNG) berhasil diunduh.', 'ok');
+                    return;
+                }
+
+                const img = container.querySelector('img');
+                if (img && img.src) {
+                    const link = document.createElement('a');
+                    link.download = 'barcode-website-grupi-coklat-pisang.png';
+                    link.href = img.src;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    showToast('Membuka/mengunduh gambar QR Code.', 'ok');
+                    return;
+                }
+            } catch (err) {
+                showToast('Tidak dapat mengunduh PNG secara langsung di browser ini.', 'warn');
+            }
+        }
+
+        function downloadQrSvg() {
+            const container = byId('website-qr-canvas');
+            if (!container) return;
+
+            try {
+                const canvas = container.querySelector('canvas');
+                if (!canvas || typeof canvas.getContext !== 'function') {
+                    showToast('Gunakan Unduh QR (PNG) untuk mengunduh barcode saat ini.', 'warn');
+                    return;
+                }
+
+                const ctx = canvas.getContext('2d');
+                const size = canvas.width;
+                const imgData = ctx.getImageData(0, 0, size, size).data;
+                const step = 4;
+                let rects = [];
+
+                for (let y = 0; y < size; y += step) {
+                    for (let x = 0; x < size; x += step) {
+                        const idx = (y * size + x) * 4;
+                        const r = imgData[idx];
+                        const g = imgData[idx + 1];
+                        const b = imgData[idx + 2];
+                        const a = imgData[idx + 3];
+                        if (a > 128 && (r + g + b) < 380) {
+                            rects.push(`<rect x="${x}" y="${y}" width="${step}" height="${step}" fill="#2A160E"/>`);
+                        }
+                    }
+                }
+
+                const svgContent = [
+                    `<?xml version="1.0" encoding="UTF-8"?>`,
+                    `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">`,
+                    `<rect width="100%" height="100%" fill="#FFFFFF"/>`,
+                    ...rects,
+                    `</svg>`
+                ].join('');
+
+                const blob = new Blob([svgContent], { type: 'image/svg+xml;charset=utf-8' });
+                const blobUrl = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.download = 'barcode-website-grupi-coklat-pisang.svg';
+                link.href = blobUrl;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+                showToast('Barcode QR (SVG) berhasil diunduh.', 'ok');
+            } catch (err) {
+                showToast('Gagal membuat file SVG QR Code.', 'warn');
+            }
+        }
+
+        function printQrCard() {
+            try {
+                window.print();
+            } catch (err) {
+                showToast('Gunakan menu cetak browser untuk mencetak kartu QR.', 'warn');
+            }
+        }
+
+        // Fallback pemutar video jika sumber raw gagal dimuat
+        (function setupVideoFallback() {
+            const videoEl = byId('grupi-video');
+            const sourceEl = byId('grupi-video-source');
+            if (!videoEl || !sourceEl) return;
+
+            const fallbackUrl = 'https://github.com/projectpanca/grupi-coklat-pisang/blob/9aa401a11c1070d19e1c471571abdd2278eee6c6/video%20Produk.mp4?raw=true';
+            sourceEl.addEventListener('error', () => {
+                if (sourceEl.dataset.fallbackApplied) return;
+                sourceEl.dataset.fallbackApplied = '1';
+                sourceEl.src = fallbackUrl;
+                try {
+                    videoEl.load();
+                } catch (err) {
+                    // Abaikan jika browser menolak load ulang
+                }
+            });
+        })();
+
+        function openQrModal() {
+            const modal = byId('qr-modal');
+            if (!modal) return;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeQrModal() {
+            const modal = byId('qr-modal');
+            if (!modal) return;
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        const qrModalEl = byId('qr-modal');
+        if (qrModalEl) {
+            qrModalEl.addEventListener('click', function (e) {
+                if (e.target === this) {
+                    closeQrModal();
+                }
+            });
+        }
+
+        const mobileMenuToggle = byId('mobile-menu-toggle');
+        const mobileMenuEl = byId('mobile-menu');
+        if (mobileMenuToggle && mobileMenuEl) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuEl.classList.toggle('hidden');
+            });
+        }
+
+        function closeMobileMenu() {
+            if (mobileMenuEl) {
+                mobileMenuEl.classList.add('hidden');
+            }
+        }
+
+        function copyText(value, message) {
+            try {
+                const area = document.createElement('textarea');
+                area.value = String(value || '');
+                area.style.position = 'fixed';
+                area.style.opacity = '0';
+                document.body.appendChild(area);
+                area.focus();
+                area.select();
+                const copied = document.execCommand('copy');
+                document.body.removeChild(area);
+                if (copied) {
+                    showToast(message || 'Tersalin ke papan klip!', 'ok');
+                } else {
+                    showToast('Tidak dapat menyalin otomatis.', 'warn');
+                }
+            } catch (err) {
+                showToast('Tidak dapat menyalin otomatis.', 'warn');
+            }
+        }
+
+        function showToast(message, status = 'ok') {
+            const container = byId('toast-box');
+            if (!container) return;
+            const el = document.createElement('div');
+            const styleClass = status === 'warn'
+                ? 'bg-amber-950 border-amber-400 text-amber-100'
+                : 'bg-choco-900 border-gold-500 text-cream-50';
+
+            el.className = `${styleClass} border px-4 py-3 rounded-2xl shadow-xl text-xs sm:text-sm font-medium flex items-center gap-2.5 pointer-events-auto transition-all duration-300`;
+            el.innerHTML = `
+                <span class="w-2 h-2 rounded-full ${status === 'warn' ? 'bg-amber-400' : 'bg-gold-400'} shrink-0"></span>
+                <span></span>
+            `;
+            const textSpan = el.querySelector('span:last-child');
+            if (textSpan) textSpan.textContent = String(message || '');
+            container.appendChild(el);
+
+            setTimeout(() => {
+                el.classList.add('opacity-0');
+                setTimeout(() => {
+                    if (el.parentNode) el.parentNode.removeChild(el);
+                }, 300);
+            }, 3000);
+        }
+
+        // Inisialisasi kalkulator, harga, dan QR Code website
+        Object.keys(packages).forEach((key) => syncQtyInput(key));
+        renderPriceLabels();
+        updateSubtotal();
+        renderWebsiteQr(resolveInitialSiteUrl());
+    </script>
+</body>
+</html>
